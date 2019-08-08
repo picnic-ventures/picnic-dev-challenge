@@ -1,0 +1,17 @@
+{
+  "name": "dev-challenge-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc --build --watch",
+    "build": "tsc --build",
+    "start": "node build/index.js",
+    "start:watch": "nodemon build/index.js -w build/"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.1",
+    "nodemon": "^1.19.1",
+    "typescript": "^3.5.3"
+  }
+}
