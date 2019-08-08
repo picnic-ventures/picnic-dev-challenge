@@ -7,11 +7,19 @@
     "watch": "tsc --build --watch",
     "build": "tsc --build",
     "start": "node build/index.js",
+    "generate-types": "graphql-codegen --config codegen.yml",
     "start:watch": "nodemon build/index.js -w build/"
   },
   "devDependencies": {
     "@types/node": "^12.7.1",
     "nodemon": "^1.19.1",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@graphql-codegen/cli": "^1.5.0",
+    "@graphql-codegen/typescript": "^1.5.0",
+    "@graphql-codegen/typescript-resolvers": "^1.5.0",
+    "graphql": "^14.4.2",
+    "graphql-yoga": "^1.18.1"
   }
 }
