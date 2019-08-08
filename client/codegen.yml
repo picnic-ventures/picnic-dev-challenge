@@ -1,0 +1,11 @@
+documents: ./**/*.graphql
+generates:
+  __generated__/types.tsx:
+    schema: ../server/types.graphql
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-urql
+    config:
+      withComponent: false
+      withHooks: true

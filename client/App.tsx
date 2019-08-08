@@ -1,19 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Constants from 'expo-constants'
+import React from 'react'
+import url from 'url'
+import { createClient, Provider } from 'urql'
+import CatList from './screens/CatList'
+
+const { hostname } = url.parse(`http://${Constants.manifest.debuggerHost}`)
+const client = createClient({ url: `http://${hostname}:4000/graphql` })
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+    <Provider value={client}>
+      <CatList />
+    </Provider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

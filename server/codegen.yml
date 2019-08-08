@@ -1,5 +1,5 @@
 generates:
-  types.ts:
+  __generated__/types.ts:
     schema: types.graphql
     plugins:
       - typescript

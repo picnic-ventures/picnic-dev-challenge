@@ -1,0 +1,6 @@
+query CatList {
+  cats {
+    id
+    name
+  }
+}
