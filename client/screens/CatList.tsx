@@ -1,14 +1,15 @@
 import _ from 'idx'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { NavigationScreenProps } from 'react-navigation'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { NavigationScreenProps, ScrollView } from 'react-navigation'
 import { useCatListQuery } from '../__generated__/types'
+import * as constants from '../constants'
 
 export default function CatList({ navigation }: NavigationScreenProps) {
   const [{ data }] = useCatListQuery()
   const cats = _(data, _ => _.cats) || []
   return (
-    <View style={CatList.styles.container}>
+    <ScrollView style={CatList.styles.container}>
       {cats.map(cat => (
         <TouchableOpacity
           onPress={() =>
@@ -19,10 +20,15 @@ export default function CatList({ navigation }: NavigationScreenProps) {
           }
           key={cat.id}
         >
+          {cat.image != null ? (
+            <Image
+              source={{ uri: imageUrl(cat.image), width: 100, height: 100 }}
+            />
+          ) : null}
           <Text>{cat.name}</Text>
         </TouchableOpacity>
       ))}
-    </View>
+    </ScrollView>
   )
 }
 CatList.styles = StyleSheet.create({
@@ -30,6 +36,12 @@ CatList.styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'teal',
   },
 })
+
+// In a real app, the server should send whole URLs, not just paths.
+// We're taking a bit of a shortcut here, because we don't know the exact URL
+// that the dev machine will have on the server side.
+function imageUrl(path: string) {
+  return `${constants.serverUrl}${path}`
+}

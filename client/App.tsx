@@ -1,12 +1,10 @@
-import Constants from 'expo-constants'
 import React from 'react'
-import url from 'url'
 import { createClient, Provider } from 'urql'
+import * as constants from './constants'
 import Screens from './screens'
 
-const { hostname } = url.parse(`http://${Constants.manifest.debuggerHost}`)
 const client = createClient({
-  url: `http://${hostname}:4000/graphql`,
+  url: `${constants.serverUrl}/graphql`,
   fetchOptions: { credentials: 'include' },
 })
 
