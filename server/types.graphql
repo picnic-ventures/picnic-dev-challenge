@@ -1,5 +1,6 @@
 type Query {
   cats: [Cat!]!
+  cat(id: ID!): Cat
 }
 
 type Cat {

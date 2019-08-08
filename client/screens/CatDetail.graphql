@@ -1,0 +1,6 @@
+query CatDetail($id: ID!) {
+  cat(id: $id) {
+    id
+    name
+  }
+}

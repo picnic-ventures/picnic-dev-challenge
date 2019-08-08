@@ -28,13 +28,43 @@ export type Person = {
 export type Query = {
   __typename?: "Query";
   cats: Array<Cat>;
+  cat?: Maybe<Cat>;
 };
+
+export type QueryCatArgs = {
+  id: Scalars["ID"];
+};
+export type CatDetailQueryVariables = {
+  id: Scalars["ID"];
+};
+
+export type CatDetailQuery = { __typename?: "Query" } & {
+  cat: Maybe<{ __typename?: "Cat" } & Pick<Cat, "id" | "name">>;
+};
+
 export type CatListQueryVariables = {};
 
 export type CatListQuery = { __typename?: "Query" } & {
   cats: Array<{ __typename?: "Cat" } & Pick<Cat, "id" | "name">>;
 };
 
+export const CatDetailDocument = gql`
+  query CatDetail($id: ID!) {
+    cat(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
+export function useCatDetailQuery(
+  options: Omit<Urql.UseQueryArgs<CatDetailQueryVariables>, "query"> = {}
+) {
+  return Urql.useQuery<CatDetailQuery>({
+    query: CatDetailDocument,
+    ...options
+  });
+}
 export const CatListDocument = gql`
   query CatList {
     cats {

@@ -10,6 +10,9 @@ const resolvers: Resolvers = {
         },
       ]
     },
+    cat(_, { id }) {
+      return null
+    },
   },
 }
 
