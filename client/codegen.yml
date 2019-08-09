@@ -3,6 +3,9 @@ generates:
   __generated__/types.tsx:
     schema: ../server/types.graphql
     plugins:
+      - add: |
+          // This is an auto-generated file. You should never edit this by hand. Run `npm run types` to update it.
+          /* eslint-disable */
       - typescript
       - typescript-operations
       - typescript-urql

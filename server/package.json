@@ -6,21 +6,13 @@
   "scripts": {
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",
+    "lint": "eslint **/*.ts",
     "start": "node build/index.js",
     "start:watch": "nodemon build/index.js -w build/",
     "test": "ava --tap",
     "types": "graphql-codegen --config codegen.yml",
     "types:watch": "nodemon --exec \"npm run types\" -e graphql --watch",
     "dev": "concurrently npm:start:watch npm:build:watch npm:types:watch"
-  },
-  "devDependencies": {
-    "@types/node": "^12.7.1",
-    "@types/tough-cookie": "^2.3.5",
-    "ava": "^2.2.0",
-    "concurrently": "^4.1.1",
-    "nodemon": "^1.19.1",
-    "tough-cookie": "^3.0.1",
-    "typescript": "^3.5.3"
   },
   "dependencies": {
     "@graphql-codegen/cli": "^1.5.0",
@@ -32,5 +24,20 @@
     "graphql": "^14.4.2",
     "graphql-request": "^1.8.2",
     "graphql-yoga": "^1.18.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/add": "^1.5.0",
+    "@types/node": "^12.7.1",
+    "@types/tough-cookie": "^2.3.5",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "ava": "^2.2.0",
+    "concurrently": "^4.1.1",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "nodemon": "^1.19.1",
+    "tough-cookie": "^3.0.1",
+    "typescript": "^3.5.3"
   }
 }
