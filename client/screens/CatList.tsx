@@ -9,7 +9,7 @@ export default function CatList({ navigation }: NavigationScreenProps) {
   const [{ data }] = useCatListQuery()
   const cats = _(data, _ => _.cats) || []
   return (
-    <ScrollView style={CatList.styles.container}>
+    <ScrollView contentContainerStyle={CatList.styles.container}>
       {cats.map(cat => (
         <CatCard
           key={cat.id}
