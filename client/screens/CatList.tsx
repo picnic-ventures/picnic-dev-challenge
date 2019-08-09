@@ -2,7 +2,7 @@ import _ from 'idx'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { NavigationScreenProps, ScrollView } from 'react-navigation'
-import { useCatListQuery } from '../__generated__/types'
+import { useCatListQuery, Cat } from '../__generated__/types'
 import * as constants from '../constants'
 
 export default function CatList({ navigation }: NavigationScreenProps) {
@@ -11,22 +11,16 @@ export default function CatList({ navigation }: NavigationScreenProps) {
   return (
     <ScrollView style={CatList.styles.container}>
       {cats.map(cat => (
-        <TouchableOpacity
-          onPress={() =>
+        <CatCard
+          key={cat.id}
+          cat={cat}
+          onPress={id =>
             navigation.navigate({
               routeName: 'CatDetail',
-              params: { id: cat.id },
+              params: { id },
             })
           }
-          key={cat.id}
-        >
-          {cat.image != null ? (
-            <Image
-              source={{ uri: imageUrl(cat.image), width: 100, height: 100 }}
-            />
-          ) : null}
-          <Text>{cat.name}</Text>
-        </TouchableOpacity>
+        />
       ))}
     </ScrollView>
   )
@@ -36,6 +30,29 @@ CatList.styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+})
+
+function CatCard({
+  cat,
+  onPress,
+}: {
+  cat: Cat
+  onPress: (catId: string) => void
+}) {
+  return (
+    <TouchableOpacity onPress={() => onPress(cat.id)}>
+      {cat.image != null ? (
+        <Image source={{ uri: imageUrl(cat.image), width: 100, height: 100 }} />
+      ) : null}
+      <Text style={CatCard.styles.fontExample}>{cat.name}</Text>
+    </TouchableOpacity>
+  )
+}
+CatCard.styles = StyleSheet.create({
+  fontExample: {
+    fontFamily: 'Circular Book',
+    fontSize: 18,
   },
 })
 
