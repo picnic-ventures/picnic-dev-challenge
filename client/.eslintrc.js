@@ -8,7 +8,6 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'warn',
-    'react/jsx-no-literals': 'warn',
     'react/display-name': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
