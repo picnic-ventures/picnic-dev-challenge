@@ -4,9 +4,11 @@
 
 The aim of this project is to test your ability to develop two screens in an existing React Native app, following a design spec as precisely as possible.
 
-We have aimed to make the tech stack as close as possible to the "real deal" you will be working with: the client is a React Native project using [Expo](https://expo.io/), and the server is a Node.js-based GraphQL server built with [`graphql-yoga`](https://www.npmjs.com/package/graphql-yoga), which is a thin layer on top of [express](https://expressjs.com/) and [Apollo Server](https://www.apollographql.com/docs/apollo-server/). The whole project is written in TypeScript, with types generated from the GraphQL schema using [`graphql-codegen`](https://graphql-code-generator.com/). All of these things are already set up for you, you just need to implement the layouts of the screens in the design spec.
+We have aimed to make the tech stack as close as possible to the "real deal" you will be working with: the client is a React Native project using [Expo](https://expo.io/), and the server is a Node.js-based GraphQL server built with [`graphql-yoga`](https://www.npmjs.com/package/graphql-yoga), which is a thin layer on top of [Express](https://expressjs.com/) and [Apollo Server](https://www.apollographql.com/docs/apollo-server/). The whole project is written in TypeScript, with types generated from the GraphQL schema using [`graphql-codegen`](https://graphql-code-generator.com/). All of these things are already set up for you, you just need to implement the layouts of the screens in the design spec.
 
-## Step 1: The design spec
+**Please read the whole file before you get started.** There are some helpful links at the end of the file if you want to do any background reading on any of the technologies used in the project.
+
+## The design spec
 
 [**Check out the design spec here.**](https://www.figma.com/file/Y0N6jk9SYSwveaci5oUjo3/Picnic-Tech-Task)
 
@@ -14,13 +16,15 @@ We are using [Figma](https://www.figma.com/) as our main design tool. You will h
 
 Once logged in, you will be able to click on any shape in the layouts, and see CSS rules like the font family, font size, etc.
 
-Note that the layout rules (like `position`, `width`, `height`, etc.) mentioned in the sidebar very rarely match up to the CSS that is actually needed in the app. Rather than exact widths/heights, you should mostly be focusing on making the margins/paddings match the spec closely, as well as font sizes and colors.
+Note that the layout rules (like `position`, `width`, `height`, etc.) mentioned in the sidebar very rarely match up to the CSS that is actually needed in the app. Rather than exact widths/heights, you should mostly be focusing on making the margins/paddings match the spec closely, as well as font sizes/weights and colors.
 
 A very useful tool for finding out margins in Figma is to select a shape, hold down the `alt` button, and hover over any other shape. You will then see the distance between the shapes show up.
 
-Make sure you're happy with navigating the Figma project before getting started! If anything is unclear, please ask!
+Make sure you're happy with navigating the Figma project before getting started. If anything is unclear, please ask!
 
-## Step 2: Setting up your dev environment
+## Setting up your dev environment
+
+> ⚠️**If any of these setup steps are unclear, or do not work for you, please reach out to me as soon as possible!** These steps are unfortunately inevitable, but the point of this exercise is not to test whether you're able to set all this stuff up from scratch.
 
 To get started, fork this repository on GitHub by clicking the "Fork" button in the top-right corner. **Please make sure your forked repo is private.** (It should be private by default.)
 
@@ -119,6 +123,61 @@ VS Code comes with TypeScript support out of the box, so you should be able to j
 If you're using Atom, I strongly recommend installing the [`atom-ide-ui` and `ide-typescript` packages](https://ide.atom.io/). This will make your life much easier, as errors will show up in your editor, component names will auto-complete, etc.
 
 **Please definitely install [**ESLint**](https://eslint.org/docs/user-guide/integrations#editors) and [**Prettier**](https://prettier.io/docs/en/editors.html) plugins in your editor.** We use these tools to maintain a consistent code style. The Prettier plugin will automatically format your code to a consistent style whenever you save any TypeScript or JavaScript file -- if that does not happen automatically, make sure you enable the "Format on Save" option in your editor.
+
+## Requirements
+
+Once you have everything set up, you should be able to start coding! :)
+
+You should commit your progress once you've completed each step, so that even if you don't finish the whole exercise, I can still see some progress.
+
+In the `client` directory, you should see a directory called `screens` containing a `CatList` screen, and a `CatDetail` screen, as well as corresponding `.graphql` files defining the queries. These correspond to the "Feed" and "Detail" pages in the Figma spec.
+
+### Task 1: Cat feed
+
+The `CatList` screen already has a bunch of sample code, which demonstrates:
+
+- how to make a query (`useCatListQuery`)
+- how to conveniently get data out of a nested object which can potentially be null/undefined (using [`idx`](https://www.npmjs.com/package/idx), imported as `_`)
+- how to navigate to the `CatDetail` screen using [`react-navigation`](https://reactnavigation.org/) ([see here](https://reactnavigation.org/docs/en/navigating.html) for details)
+- how to load the cat images
+- how to set a custom font -- the names for the available fonts are defined in `App.tsx`
+
+I would recommend starting with implementing the layout for _just the grid of cats_, ie. without the filter buttons, and leaving out the like button functionality initially. You will have completed this step if you have a grid of cats which displays all the relevant information, and clicking on any of the cats opens the detail view for the corresponding cat (you can close the detail view by swiping down on the screen).
+
+You will need to change the query defined in `CatList.graphql` to fetch more data. Make sure the `types:watch` npm script is running, as described in the [GraphQL Types](#graphql-types) section above.
+
+### Task 2: Cat detail view
+
+Once you've implemented the layout for the list view, implement the layout for the detail view, according to the spec. You will need to adapt the query and component called `CatDetail`.
+
+In the `assets` folder, you will find image assets for the like button. Check the react-native [`Image`](https://facebook.github.io/react-native/docs/image.html) docs for info on how to load these.
+
+### Task 3: Like buttons
+
+Once you have all of the layouts implemented, make the like buttons actually toggle on/off, and send a request to the server.
+
+To do that, you will need to define a GraphQL _mutation_. Try manually creating a mutation in the GraphQL Playground page ([`http://localhost:4000`](http://localhost:4000)) to get a feel for how that works. I've defined a mutation type called `like` which takes a cat id and a boolean value as parameters. Check the "DOCS" tab on the right hand side of the Playground page to find out the exact naming.
+
+Read the documentation for [how to use mutations with `urql`](https://formidable.com/open-source/urql/docs/getting-started/#using-hooks-1), the GraphQL client we're using in the app. (Note that in the documentation they define the mutation directly in the JS file. Instead, you should add the mutation to one of the `.graphql` files, and import the automatically generated hook function, similar to how the existing queries are defined.)
+
+One thing that's very important when defining mutations is to always return all of the fields that have changed, as well as the `id` field. This allows the GraphQL client to automatically update the data in all parts of the UI that have changed. You should test whether the like button in the detail view updates when you press the button in the list view, and vice versa.
+
+Note that the likes are not persisted in any database, so if you restart the server, they will reset.
+
+### Task 4: Filtering the cat feed
+
+The `cats` query type has an optional boolean parameter called `liked`. If you pass `liked: true` to this, it will only return the cats that you have liked (either by using a like button in the app or by manually creating a mutation in the playground). Note that if you pass `liked: false`, it will only show cats that you _have not liked_, which is not a feature we have in the spec at the moment. Apart from the query that's being performed, all of the view logic should be the same, so you should not need to duplicate any other code.
+
+To implement the "All cats" and "Liked" buttons, use React's `useState` hook, rather than using a class component and `this.setState`. [The official React documentation](https://reactjs.org/docs/hooks-state.html) about the `useState` hook is very comprehensive.
+
+## What I'm looking for
+
+Hopefully all of these requirements are clear. On top of actually completing the functionality, an ideal solution would meet these criteria:
+
+- **Matches existing code style**: If you install the Prettier editor plugin (described [above](#setting-up-your-editor)), it will automatically match the indentation to the existing style.
+- **Clear component and variable naming**: This should be obvious, but your components and variables should clearly reflect what they are used for. You can easily rename variables in VS Code / Atom by using the "Rename Symbol" functionality.
+- **React hooks**: You should not need to create any class components. Instead, you should use the `useState` hooks for component state. You should not really need to use any other kind of hook, other than the data fetching hooks.
+- **Meaningful commit messages**: These do not need to be super detailed, but they should tell me what's happening in the commit. Eg. `implement like buttons` is a perfectly acceptable commit message, `fix some stuff` is not.
 
 ## Helpful links
 
