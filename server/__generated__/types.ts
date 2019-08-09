@@ -40,6 +40,8 @@ export type Person = {
   id: Scalars['ID']
   name?: Maybe<Scalars['String']>
   email?: Maybe<Scalars['String']>
+  phone?: Maybe<Scalars['String']>
+  address?: Maybe<Scalars['String']>
 }
 
 export type Query = {
@@ -186,6 +188,8 @@ export type PersonResolvers<
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
 }
 
 export type QueryResolvers<

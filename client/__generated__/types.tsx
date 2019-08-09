@@ -41,6 +41,8 @@ export type Person = {
   id: Scalars['ID']
   name?: Maybe<Scalars['String']>
   email?: Maybe<Scalars['String']>
+  phone?: Maybe<Scalars['String']>
+  address?: Maybe<Scalars['String']>
 }
 
 export type Query = {

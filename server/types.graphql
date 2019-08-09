@@ -22,4 +22,6 @@ type Person {
   id: ID!
   name: String
   email: String
+  phone: String
+  address: String
 }
