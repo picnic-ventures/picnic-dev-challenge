@@ -184,3 +184,4 @@ Hopefully all of these requirements are clear. On top of actually completing the
 - [Expo docs](https://docs.expo.io/versions/latest/)
 - [Introduction to GraphQL](https://graphql.org/learn/)
 - [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/content/)
+- [`urql` docs](https://formidable.com/open-source/urql/docs/)
