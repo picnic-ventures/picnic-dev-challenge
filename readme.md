@@ -12,11 +12,13 @@ We have aimed to make the tech stack as close as possible to the "real deal" you
 
 We are using [Figma](https://www.figma.com/) as our main design tool. You will have to create an account to use the tool.
 
-Once logged in, you will be able to click on any shape in the layouts, and see CSS rules like the font family, font size, etc. Note that the layout rules (like `position`, `width`, `height`, etc.) mentioned in the sidebar very rarely match up to the CSS that is actually needed in the app.
+Once logged in, you will be able to click on any shape in the layouts, and see CSS rules like the font family, font size, etc.
 
-Rather than exact widths/heights, you should mostly be focusing on making the margins/paddings match the spec closely. A very useful tool for finding out margins in Figma is to select a shape, hold down the `alt` button, and hover over any other shape. You will then see the distance between the shapes show up.
+Note that the layout rules (like `position`, `width`, `height`, etc.) mentioned in the sidebar very rarely match up to the CSS that is actually needed in the app. Rather than exact widths/heights, you should mostly be focusing on making the margins/paddings match the spec closely, as well as font sizes and colors.
 
-Make sure you're happy with navigating the Figma project before getting started!
+A very useful tool for finding out margins in Figma is to select a shape, hold down the `alt` button, and hover over any other shape. You will then see the distance between the shapes show up.
+
+Make sure you're happy with navigating the Figma project before getting started! If anything is unclear, please ask!
 
 ## Step 2: Setting up your dev environment
 
@@ -107,6 +109,16 @@ npm run types:watch
 ```
 
 This runs the GraphQL code generator, and will update the TypeScript definitions whenever you change any of the GraphQL queries. You will need this running if you are specifying new queries, or adding new fields to existing queries, otherwise the changes to your queries will not show up in the client code.
+
+### Setting up your editor
+
+I recommend using either [VS Code](https://code.visualstudio.com/), or [Atom](https://atom.io/) if you prefer.
+
+VS Code comes with TypeScript support out of the box, so you should be able to just open any of the TypeScript files without problems.
+
+If you're using Atom, I strongly recommend installing the [`atom-ide-ui` and `ide-typescript` packages](https://ide.atom.io/). This will make your life much easier, as errors will show up in your editor, component names will auto-complete, etc.
+
+**Please definitely install [**ESLint**](https://eslint.org/docs/user-guide/integrations#editors) and [**Prettier**](https://prettier.io/docs/en/editors.html) plugins in your editor.** We use these tools to maintain a consistent code style. The Prettier plugin will automatically format your code to a consistent style whenever you save any TypeScript or JavaScript file -- if that does not happen automatically, make sure you enable the "Format on Save" option in your editor.
 
 ## Helpful links
 
