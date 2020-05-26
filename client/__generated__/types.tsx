@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 import * as Urql from 'urql'
 export type Maybe<T> = T | null
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string
@@ -58,12 +59,13 @@ export type QueryCatsArgs = {
 export type QueryCatArgs = {
   id: Scalars['ID']
 }
+
 export type CatDetailQueryVariables = {
   id: Scalars['ID']
 }
 
 export type CatDetailQuery = { __typename?: 'Query' } & {
-  cat: Maybe<{ __typename?: 'Cat' } & Pick<Cat, 'id' | 'name'>>
+  cat?: Maybe<{ __typename?: 'Cat' } & Pick<Cat, 'id' | 'name'>>
 }
 
 export type CatListQueryVariables = {}

@@ -1,13 +1,13 @@
-import { Cookie } from 'tough-cookie'
 import test from 'ava'
 import { GraphQLClient } from 'graphql-request'
+import { Cookie } from 'tough-cookie'
 import startServer from './server'
 
-let serverUrl = 'http://localhost:4001/graphql'
+const serverUrl = 'http://localhost:4001/graphql'
 let cookie = ''
-test.before(async _ => {
+test.before(async (_) => {
   await startServer(4001)
-  const res = await fetch(`${serverUrl}/`, { credentials: 'include' })
+  const res = await fetch(serverUrl, { credentials: 'include' })
   const parsed = Cookie.parse(res.headers.get('set-cookie')!)
   cookie = parsed!.cookieString()
 })
@@ -17,7 +17,7 @@ async function request(query: string, variables?: any) {
   return await client.rawRequest(query, variables)
 }
 
-test('list cats', async t => {
+test('can list cats', async (t) => {
   const { data, errors } = await request(`
     query AllCats {
       cats {
@@ -33,7 +33,7 @@ test('list cats', async t => {
   t.is(typeof data.cats[0].name, 'string')
 })
 
-test('liking a cat', async t => {
+test('can like a cat', async (t) => {
   const {
     data: { cats },
   } = await request(`
@@ -84,4 +84,18 @@ test('liking a cat', async t => {
   )
   t.truthy(cat)
   t.true(cat.liked)
+})
+
+test('can request a cat for catsitting - success', async (t) => {
+  // The request should only be successful if the cat is actually available in that date range.
+  t.fail('Not implemented yet')
+})
+
+test('can request a cat for catsitting - failure', async (t) => {
+  // The date range is not available
+  t.fail('Not implemented yet')
+})
+
+test('owner profile is invisible to a user until a cat has been successfully requested', async (t) => {
+  t.fail('Not implemented yet')
 })

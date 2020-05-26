@@ -1,15 +1,12 @@
-import _ from 'idx'
 import React from 'react'
-import { NavigationScreenProps } from 'react-navigation'
-import { View, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { ScreenProps } from '.'
 import { useCatDetailQuery } from '../__generated__/types'
 
-export default function CatDetail({
-  navigation: { state },
-}: NavigationScreenProps<{ id: string }>) {
-  const id = state.params.id
+export default function CatDetail({ route }: ScreenProps<'CatDetail'>) {
+  const id = route.params.id
   const [{ data }] = useCatDetailQuery({ variables: { id } })
-  const catName = _(data, _ => _.cat.name)
+  const catName = data?.cat?.name
   return (
     <View style={CatDetail.styles.container}>
       <Text>

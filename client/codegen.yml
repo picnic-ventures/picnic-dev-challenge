@@ -12,3 +12,8 @@ generates:
     config:
       withComponent: false
       withHooks: true
+      scalars:
+        Date: string
+hooks:
+  afterAllFileWrite:
+    - prettier --write

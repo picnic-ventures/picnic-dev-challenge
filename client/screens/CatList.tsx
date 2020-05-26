@@ -1,25 +1,25 @@
-import _ from 'idx'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import { NavigationScreenProps, ScrollView } from 'react-navigation'
-import { useCatListQuery, Cat } from '../__generated__/types'
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native'
+import { ScreenProps } from '.'
 import * as constants from '../constants'
+import { Cat, useCatListQuery } from '../__generated__/types'
 
-export default function CatList({ navigation }: NavigationScreenProps) {
+export default function CatList({ navigation }: ScreenProps<'CatList'>) {
   const [{ data }] = useCatListQuery()
-  const cats = _(data, _ => _.cats) || []
+  const cats = data?.cats ?? []
   return (
     <ScrollView contentContainerStyle={CatList.styles.container}>
-      {cats.map(cat => (
+      {cats.map((cat) => (
         <CatCard
           key={cat.id}
           cat={cat}
-          onPress={id =>
-            navigation.navigate({
-              routeName: 'CatDetail',
-              params: { id },
-            })
-          }
+          onPress={(id) => navigation.navigate('CatDetail', { id })}
         />
       ))}
     </ScrollView>

@@ -9,3 +9,13 @@ generates:
       - typescript-resolvers
     config:
       contextType: '../server#Context'
+      mapperTypeSuffix: Internal
+      mappers:
+        Cat: '../types#Cat'
+        DateInterval: '../types#DateInterval'
+        Person: '../types#Person'
+      scalars:
+        Date: string
+hooks:
+  afterAllFileWrite:
+    - prettier --write

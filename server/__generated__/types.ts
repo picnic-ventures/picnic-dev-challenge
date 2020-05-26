@@ -1,9 +1,23 @@
 // This is an auto-generated file. You should never edit this by hand. Run `npm run types` to update it.
 /* eslint-disable */
 
-import { GraphQLResolveInfo } from 'graphql'
+import {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig,
+} from 'graphql'
+import {
+  Cat as CatInternal,
+  DateInterval as DateIntervalInternal,
+  Person as PersonInternal,
+} from '../types'
 import { Context } from '../server'
 export type Maybe<T> = T | null
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X]
+} &
+  { [P in K]-?: NonNullable<T[P]> }
+
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string
@@ -11,6 +25,7 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  Date: string
 }
 
 export type Cat = {
@@ -23,6 +38,13 @@ export type Cat = {
   liked?: Maybe<Scalars['Boolean']>
   name?: Maybe<Scalars['String']>
   owner?: Maybe<Person>
+  availability: Array<DateInterval>
+}
+
+export type DateInterval = {
+  __typename?: 'DateInterval'
+  start: Scalars['Date']
+  end: Scalars['Date']
 }
 
 export type Mutation = {
@@ -60,13 +82,6 @@ export type QueryCatArgs = {
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
 
-export type ResolverFn<TResult, TParent, TContext, TArgs> = (
-  parent: TParent,
-  args: TArgs,
-  context: TContext,
-  info: GraphQLResolveInfo
-) => Promise<TResult> | TResult
-
 export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
   fragment: string
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>
@@ -75,6 +90,13 @@ export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
   | StitchingResolver<TResult, TParent, TContext, TArgs>
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult
 
 export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -90,27 +112,64 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>
 
-export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
-  subscribe: SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs>
-  resolve?: SubscriptionResolveFn<TResult, TParent, TContext, TArgs>
+export interface SubscriptionSubscriberObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> {
+  subscribe: SubscriptionSubscribeFn<
+    { [key in TKey]: TResult },
+    TParent,
+    TContext,
+    TArgs
+  >
+  resolve?: SubscriptionResolveFn<
+    TResult,
+    { [key in TKey]: TResult },
+    TContext,
+    TArgs
+  >
 }
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>
+}
+
+export type SubscriptionObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>
 
 export type SubscriptionResolver<
   TResult,
+  TKey extends string,
   TParent = {},
   TContext = {},
   TArgs = {}
 > =
   | ((
       ...args: any[]
-    ) => SubscriptionResolverObject<TResult, TParent, TContext, TArgs>)
-  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>
+    ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   parent: TParent,
   context: TContext,
   info: GraphQLResolveInfo
-) => Maybe<TTypes>
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>
+
+export type isTypeOfResolverFn<T = {}> = (
+  obj: T,
+  info: GraphQLResolveInfo
+) => boolean | Promise<boolean>
 
 export type NextResolverFn<T> = () => Promise<T>
 
@@ -131,11 +190,13 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
-  Cat: ResolverTypeWrapper<Cat>
+  Cat: ResolverTypeWrapper<CatInternal>
   ID: ResolverTypeWrapper<Scalars['ID']>
   Int: ResolverTypeWrapper<Scalars['Int']>
   String: ResolverTypeWrapper<Scalars['String']>
-  Person: ResolverTypeWrapper<Person>
+  Person: ResolverTypeWrapper<PersonInternal>
+  DateInterval: ResolverTypeWrapper<DateIntervalInternal>
+  Date: ResolverTypeWrapper<Scalars['Date']>
   Mutation: ResolverTypeWrapper<{}>
 }
 
@@ -143,11 +204,13 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Query: {}
   Boolean: Scalars['Boolean']
-  Cat: Cat
+  Cat: CatInternal
   ID: Scalars['ID']
   Int: Scalars['Int']
   String: Scalars['String']
-  Person: Person
+  Person: PersonInternal
+  DateInterval: DateIntervalInternal
+  Date: Scalars['Date']
   Mutation: {}
 }
 
@@ -167,6 +230,26 @@ export type CatResolvers<
   liked?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   owner?: Resolver<Maybe<ResolversTypes['Person']>, ParentType, ContextType>
+  availability?: Resolver<
+    Array<ResolversTypes['DateInterval']>,
+    ParentType,
+    ContextType
+  >
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export interface DateScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date'
+}
+
+export type DateIntervalResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['DateInterval'] = ResolversParentTypes['DateInterval']
+> = {
+  start?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
+  end?: Resolver<ResolversTypes['Date'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
 }
 
 export type MutationResolvers<
@@ -177,7 +260,7 @@ export type MutationResolvers<
     Maybe<ResolversTypes['Cat']>,
     ParentType,
     ContextType,
-    MutationLikeArgs
+    RequireFields<MutationLikeArgs, 'catId' | 'value'>
   >
 }
 
@@ -190,6 +273,7 @@ export type PersonResolvers<
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
 }
 
 export type QueryResolvers<
@@ -200,18 +284,20 @@ export type QueryResolvers<
     Array<ResolversTypes['Cat']>,
     ParentType,
     ContextType,
-    QueryCatsArgs
+    RequireFields<QueryCatsArgs, never>
   >
   cat?: Resolver<
     Maybe<ResolversTypes['Cat']>,
     ParentType,
     ContextType,
-    QueryCatArgs
+    RequireFields<QueryCatArgs, 'id'>
   >
 }
 
 export type Resolvers<ContextType = Context> = {
   Cat?: CatResolvers<ContextType>
+  Date?: GraphQLScalarType
+  DateInterval?: DateIntervalResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Person?: PersonResolvers<ContextType>
   Query?: QueryResolvers<ContextType>

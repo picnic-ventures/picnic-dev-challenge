@@ -10,7 +10,7 @@ const typesPath = path.resolve(__dirname + '/../types.graphql')
 const typeDefs = fs.readFileSync(typesPath, 'utf8')
 
 export type Context = {
-  session: string
+  userId: string
   stores: typeof stores
 }
 
@@ -18,7 +18,7 @@ const server = new GraphQLServer({
   typeDefs,
   resolvers: resolvers as any,
   context({ request }): Context {
-    return { session: request.sessionID!, stores }
+    return { userId: request.sessionID!, stores }
   },
 })
 
@@ -34,8 +34,8 @@ server.express.use(
 server.express.use('/images', express.static('images'))
 
 export default function startServer(port: number) {
-  return new Promise<Options>(resolve => {
-    server.start({ port, endpoint: '/graphql' }, options => {
+  return new Promise<Options>((resolve) => {
+    server.start({ port, endpoint: '/graphql' }, (options) => {
       resolve(options)
     })
   })

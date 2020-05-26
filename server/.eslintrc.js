@@ -16,6 +16,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-object-literal-type-assertion': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     // Enforced by prettier
     '@typescript-eslint/indent': 'off',
