@@ -1,6 +1,6 @@
 # Picnic dev challenge
 
-> Hello! This is part of [our hiring process for software engineers](https://www.notion.so/teampicnic/Software-Engineer-React-Native-Node-js-5445cb0e5c4a48c9985f1470723516c8). If you'd like to apply, check out the instructions in that document. **Note that we will not review any submissions unless you have completed the first steps of this process, and have been asked to complete this task!**
+> Hello! This is part of [our hiring process for software engineers](https://www.notion.so/teampicnic/Careers-at-Picnic-473a29baa65f4b1faea5f87baaae1b6c). If you'd like to apply, check out the instructions in that document. **Note that we will not review any submissions unless you have completed the first steps of this process, and have been asked to complete this task!**
 
 ![](./readme.png)
 
