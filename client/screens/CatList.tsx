@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Image,
   ScrollView,
@@ -11,7 +11,10 @@ import * as constants from '../constants'
 import { Cat, useCatListQuery } from '../__generated__/types'
 
 export default function CatList({ navigation }: ScreenProps<'CatList'>) {
-  const [{ data }] = useCatListQuery()
+  const [{ data, error }] = useCatListQuery()
+  useEffect(() => {
+    if (error != null) console.warn(error)
+  }, [error])
   const cats = data?.cats ?? []
   return (
     <ScrollView contentContainerStyle={CatList.styles.container}>

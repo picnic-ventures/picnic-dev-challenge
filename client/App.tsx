@@ -1,5 +1,5 @@
+import AppLoading from 'expo-app-loading'
 import * as Font from 'expo-font'
-import { AppLoading } from 'expo'
 import React, { useState } from 'react'
 import { createClient, Provider } from 'urql'
 import * as constants from './constants'

@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  Date: string
 }
 
 export type Cat = {
@@ -25,6 +26,13 @@ export type Cat = {
   liked?: Maybe<Scalars['Boolean']>
   name?: Maybe<Scalars['String']>
   owner?: Maybe<Person>
+  availability?: Maybe<Array<DateInterval>>
+}
+
+export type DateInterval = {
+  __typename?: 'DateInterval'
+  start: Scalars['Date']
+  end: Scalars['Date']
 }
 
 export type Mutation = {

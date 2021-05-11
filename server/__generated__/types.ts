@@ -38,7 +38,7 @@ export type Cat = {
   liked?: Maybe<Scalars['Boolean']>
   name?: Maybe<Scalars['String']>
   owner?: Maybe<Person>
-  availability: Array<DateInterval>
+  availability?: Maybe<Array<DateInterval>>
 }
 
 export type DateInterval = {
@@ -231,7 +231,7 @@ export type CatResolvers<
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   owner?: Resolver<Maybe<ResolversTypes['Person']>, ParentType, ContextType>
   availability?: Resolver<
-    Array<ResolversTypes['DateInterval']>,
+    Maybe<Array<ResolversTypes['DateInterval']>>,
     ParentType,
     ContextType
   >

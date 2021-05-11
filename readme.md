@@ -44,7 +44,10 @@ To set up the server, open a terminal, and `cd` to the `server` directory. Once 
 
 ```
 yarn
+yarn build
 ```
+
+This will install all dependencies, and then run an initial build.
 
 Once the installation is complete, you can run the following command to run a dev server:
 
