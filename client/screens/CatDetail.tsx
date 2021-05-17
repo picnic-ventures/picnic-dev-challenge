@@ -8,15 +8,16 @@ export default function CatDetail({ route }: ScreenProps<'CatDetail'>) {
   const [{ data }] = useCatDetailQuery({ variables: { id } })
   const catName = data?.cat?.name
   return (
-    <View style={CatDetail.styles.container}>
+    <View style={styles.container}>
       <Text>
-        This is where you'll need to implement the cat detail screen for{' '}
+        This is where you will need to implement the cat detail screen for{' '}
         {catName}.
       </Text>
     </View>
   )
 }
-CatDetail.styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',

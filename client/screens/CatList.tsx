@@ -17,7 +17,7 @@ export default function CatList({ navigation }: ScreenProps<'CatList'>) {
   }, [error])
   const cats = data?.cats ?? []
   return (
-    <ScrollView contentContainerStyle={CatList.styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {cats.map((cat) => (
         <CatCard
           key={cat.id}
@@ -28,13 +28,6 @@ export default function CatList({ navigation }: ScreenProps<'CatList'>) {
     </ScrollView>
   )
 }
-CatList.styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
 
 function CatCard({
   cat,
@@ -48,16 +41,10 @@ function CatCard({
       {cat.image != null ? (
         <Image source={{ uri: imageUrl(cat.image), width: 100, height: 100 }} />
       ) : null}
-      <Text style={CatCard.styles.fontExample}>{cat.name}</Text>
+      <Text style={styles.fontExample}>{cat.name}</Text>
     </TouchableOpacity>
   )
 }
-CatCard.styles = StyleSheet.create({
-  fontExample: {
-    fontFamily: 'Circular Book',
-    fontSize: 18,
-  },
-})
 
 // In a real app, the server should send whole URLs, not just paths.
 // We're taking a bit of a shortcut here, because we don't know the exact URL
@@ -65,3 +52,15 @@ CatCard.styles = StyleSheet.create({
 function imageUrl(path: string) {
   return `${constants.serverUrl}${path}`
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fontExample: {
+    fontFamily: 'Circular Book',
+    fontSize: 18,
+  },
+})
