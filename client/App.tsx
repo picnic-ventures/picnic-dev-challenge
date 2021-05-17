@@ -5,9 +5,19 @@ import { createClient, Provider } from 'urql'
 import * as constants from './constants'
 import Screens from './screens'
 
+// Generates a new user id every time you open the app. Ensures that actions
+// made in a single session are matched to the same user, but the user id will
+// change every time the app is opened again. In a real app, you would get a
+// token from the server, and store it in the keychain.
+const userId = `user_${String(Math.random()).slice(2, 8)}`
+
 const client = createClient({
   url: `${constants.serverUrl}/graphql`,
-  fetchOptions: { credentials: 'include' },
+  fetchOptions: {
+    headers: {
+      Authorization: `Bearer ${userId}`,
+    },
+  },
 })
 
 export default function App() {

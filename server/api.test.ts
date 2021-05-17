@@ -1,20 +1,21 @@
 import test from 'ava'
 import { GraphQLClient } from 'graphql-request'
-import { Cookie } from 'tough-cookie'
 import startServer from './server'
 
 const serverUrl = 'http://localhost:4001/graphql'
-let cookie = ''
+
+// Ensures that all tests are run as the same user.
+const fakeUserId = 'test_user'
+
 test.before(async (_) => {
   await startServer(4001)
-  const res = await fetch(serverUrl, { credentials: 'include' })
-  const parsed = Cookie.parse(res.headers.get('set-cookie')!)
-  cookie = parsed!.cookieString()
 })
 
 async function request(query: string, variables?: any) {
-  const client = new GraphQLClient(serverUrl, { headers: { cookie } })
-  return await client.rawRequest(query, variables)
+  const client = new GraphQLClient(serverUrl, {
+    headers: { Authorization: `Bearer ${fakeUserId}` },
+  })
+  return await client.rawRequest<any>(query, variables)
 }
 
 test('can list cats', async (t) => {

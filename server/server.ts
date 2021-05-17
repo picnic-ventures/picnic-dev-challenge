@@ -1,5 +1,4 @@
 import express from 'express'
-import session from 'express-session'
 import fs from 'fs'
 import { GraphQLServer, Options } from 'graphql-yoga'
 import path from 'path'
@@ -18,18 +17,10 @@ const server = new GraphQLServer({
   typeDefs,
   resolvers: resolvers as any,
   context({ request }): Context {
-    return { userId: request.sessionID!, stores }
+    const userId = getUserId(request)
+    return { userId, stores }
   },
 })
-
-server.express.use(
-  session({
-    resave: false,
-    saveUninitialized: true,
-    // Always generate a secure secret using crypto.randomBytes() in a real app!
-    secret: 'not-very-secure-secret',
-  })
-)
 
 server.express.use('/images', express.static('images'))
 
@@ -39,4 +30,33 @@ export default function startServer(port: number) {
       resolve(options)
     })
   })
+}
+
+// Warning! This performs absolutely no authentication or checks the passed
+// "token" in any way. You would obviously never do this in a real app, but
+// this allows us to simulate sessions in the simplest possible way.
+// This function returns a random user id if there is no valid authorization
+// header in the request. Normally, you would want to fail the request with a
+// 401 Unauthorized HTTP response.
+function getUserId(request: express.Request) {
+  const authorization = request.headers.authorization
+  if (authorization == null) {
+    console.error(
+      'Warning! No authorization header found. Generating a random user id.'
+    )
+    return anonymousUserId()
+  }
+  const matches = /^Bearer (\w+)$/.exec(authorization)
+  if (matches == null) {
+    console.error(
+      'Warning! Invalid authorization header found. It needs to be in the format "Bearer <token>". Generating a random user id.'
+    )
+    return anonymousUserId()
+  }
+  const [_, token] = matches
+  return token
+}
+
+function anonymousUserId() {
+  return `anonymous_${String(Math.random()).slice(2, 8)}`
 }

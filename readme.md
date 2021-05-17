@@ -80,6 +80,14 @@ query Cats {
 
 If you press the play button, you should see some results on the right side of the screen.
 
+If you get a warning in the server logs telling you that no authorization header was found, you can add the following to the "HTTP Headers" tab:
+
+```json
+{ "Authorization": "Bearer some_user" }
+```
+
+The server does not perform any actual authorization, it just uses the given token as a user id. This is obviously a massive over-simplification, but it is the simplest possible way we can provide a basic notion of persistent sessions.
+
 ### The client
 
 In this exercise we'll be using [Expo](https://expo.io/) as a dev environment for the frontend code. There are two options for developing the client:
